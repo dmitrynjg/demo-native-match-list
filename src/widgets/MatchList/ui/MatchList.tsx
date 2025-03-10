@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, VirtualizedList } from 'react-native';
 
 import { MatchListProps } from '../model';
 
@@ -14,7 +14,7 @@ export const MatchList: FC<MatchListProps> = ({ items, isLoading }) => {
     );
 
   return (
-    <View className="flex w-full flex-col gap-8">
+    <View className="flex w-full flex-col gap-[8px] lg:gap-[12px]">
       {items.map((match, index) => (
         <MatchCard key={index} match={match} />
       ))}

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { Pressable, View, Text } from 'react-native';
+
 import { DropListProps } from '../model';
-import { Pressable, FlatList, View, Text } from 'react-native';
 
 export const DropList = <Item,>({
   items,

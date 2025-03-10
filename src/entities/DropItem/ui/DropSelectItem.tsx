@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { DropSelectItemProps } from '../model';
-import { IconArrow } from '@/shared';
 import { Pressable, View, Text } from 'react-native';
+
+import { DropSelectItemProps } from '../model';
+
+import { IconArrow } from '@/shared';
 
 export const DropSelectItem: FC<DropSelectItemProps> = ({ label, onPress, isOpen }) => {
   return (

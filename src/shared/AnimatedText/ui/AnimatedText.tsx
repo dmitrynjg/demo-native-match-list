@@ -1,7 +1,7 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Text, Animated, TextProps } from 'react-native';
 
-export const AnimatedText: FC<TextProps> = ({ children, ...otherProps }) => {
+export const AnimatedText = memo<TextProps>(({ children, ...otherProps }) => {
   const fadeAnim = new Animated.Value(1);
   const [currentValue, setCurrentValue] = useState(children);
 
@@ -27,4 +27,4 @@ export const AnimatedText: FC<TextProps> = ({ children, ...otherProps }) => {
       <Text className="font-inter text-xl font-semibold text-white">{currentValue}</Text>
     </Animated.Text>
   );
-};
+});

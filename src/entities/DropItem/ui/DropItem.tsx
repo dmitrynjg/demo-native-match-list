@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { DropItemProps } from '../model';
 import { Text, View } from 'react-native';
+
+import { DropItemProps } from '../model';
 
 export const DropItem: FC<DropItemProps> = ({ label, isSelect }) => {
   return (

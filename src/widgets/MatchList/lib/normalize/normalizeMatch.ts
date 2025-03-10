@@ -1,5 +1,6 @@
-import { MatchType } from '@/entities';
 import { MatchFromServer } from '../../model';
+
+import { MatchType } from '@/entities';
 
 export const normalizeMatch = (match: MatchFromServer): MatchType => {
   return {

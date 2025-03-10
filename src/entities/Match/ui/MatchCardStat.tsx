@@ -13,7 +13,7 @@ export const MatchCardStat: FC<MatchCardStatProps> = ({ players, place, totalKil
           <View
             key={index}
             className="flex w-1/3 flex-1 flex-wrap items-center justify-between rounded-sm bg-[#101318] px-[12px] py-[8px] lg:px-[24px]">
-            <View className="lg:justify-left flex w-full items-center justify-center gap-[8px] lg:w-auto">
+            <View className="lg:justify-left flex w-full flex-row items-center justify-center gap-[8px] lg:w-auto">
               <Image
                 source={require('../../../../assets/images/avatar.png')}
                 width={200}

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { View, Text, VirtualizedList } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { MatchListProps } from '../model';
 

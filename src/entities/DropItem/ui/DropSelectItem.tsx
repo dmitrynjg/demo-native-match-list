@@ -15,7 +15,7 @@ export const DropSelectItem: FC<DropSelectItemProps> = ({ label, onPress, isOpen
           : 'border-[#0B0E12] bg-[#0B0E12] hover:border-[#0F1318] hover:bg-[#0F1318]'
       }`}>
       <Text
-        className={`font-inter truncate ${isOpen ? 'text-[#B4B5B6] hover:text-white' : 'text-white'}`}>
+        className={`font-inter truncate ${!isOpen ? 'text-[#B4B5B6]' : 'text-white'}`}>
         {label}
       </Text>
 

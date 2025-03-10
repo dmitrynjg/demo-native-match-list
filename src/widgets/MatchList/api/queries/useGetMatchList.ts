@@ -1,85 +1,53 @@
-import { useQuery } from 'react-query';
-import { UseGetMatchListResponse } from '../../model';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 
-export const mockMatchData: UseGetMatchListResponse = {
-  ok: true,
-  data: {
-    matches: [
-      {
-        time: '2024-03-20T15:00:00',
-        title: 'CS2 Championship Match',
-        homeScore: 16,
-        awayScore: 14,
-        status: 'Finished',
-        homeTeam: {
-          name: 'Team FTOYD',
-          players: [
-            { username: 'Player1', kills: 25 },
-            { username: 'Player2', kills: 18 },
-            { username: 'Player3', kills: 22 },
-            { username: 'Player4', kills: 20 },
-            { username: 'Player5', kills: 16 },
-          ],
-          points: 3,
-          place: 1,
-          total_kills: 101,
-        },
-        awayTeam: {
-          name: 'Team Warriors',
-          players: [
-            { username: 'Warrior1', kills: 19 },
-            { username: 'Warrior2', kills: 23 },
-            { username: 'Warrior3', kills: 17 },
-            { username: 'Warrior4', kills: 15 },
-            { username: 'Warrior5', kills: 21 },
-          ],
-          points: 1,
-          place: 2,
-          total_kills: 95,
-        },
-      },
-      {
-        time: '2024-03-21T18:00:00',
-        title: 'CS2 Qualifiers',
-        homeScore: 0,
-        awayScore: 0,
-        status: 'Scheduled',
-        homeTeam: {
-          name: 'Team Alpha',
-          players: [
-            { username: 'Alpha1', kills: 0 },
-            { username: 'Alpha2', kills: 0 },
-            { username: 'Alpha3', kills: 0 },
-            { username: 'Alpha4', kills: 0 },
-            { username: 'Alpha5', kills: 0 },
-          ],
-          points: 0,
-          place: 0,
-          total_kills: 0,
-        },
-        awayTeam: {
-          name: 'Team Beta',
-          players: [
-            { username: 'Beta1', kills: 0 },
-            { username: 'Beta2', kills: 0 },
-            { username: 'Beta3', kills: 0 },
-            { username: 'Beta4', kills: 0 },
-            { username: 'Beta5', kills: 0 },
-          ],
-          points: 0,
-          place: 0,
-          total_kills: 0,
-        },
-      },
-    ],
-  },
-};
+import { UseGetMatchListResponse, MatchFromServer } from '../../model';
 
 export const useGetMatchList = () => {
   return useQuery<UseGetMatchListResponse>({
     queryKey: 'matchList',
     queryFn: async () => {
-      return mockMatchData;
+      return axios
+        .get<UseGetMatchListResponse>('https://app.ftoyd.com/fronttemp-service/fronttemp')
+        .then((response) => response.data);
     },
   });
+};
+
+export const useGetMatchesUpdateSocket = () => {
+  const url = 'wss://app.ftoyd.com/fronttemp-service/ws';
+
+  const queryClient = useQueryClient();
+  const ws = new WebSocket(url);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const message = JSON.parse(event.data);
+        if (message.type === 'update_matches') {
+          queryClient.setQueryData<UseGetMatchListResponse | undefined>('matchList', (oldData) => {
+            if (!oldData) return oldData;
+
+            const updatedMatches = oldData.data.matches.map((oldMatch) => {
+              const newMatch = message.data.find(
+                (m: MatchFromServer) => m.title === oldMatch.title
+              );
+              return newMatch ? { ...oldMatch, ...newMatch } : oldMatch;
+            });
+
+            return { ...oldData, data: { ...oldData.data, matches: updatedMatches } };
+          });
+        }
+      } catch (error) {
+        console.error('WebSocket error:', error);
+      }
+    };
+
+    ws.addEventListener('message', handleMessage);
+    return () => {
+      ws.removeEventListener('message', handleMessage);
+      ws.close();
+    };
+  }, [queryClient]);
 };

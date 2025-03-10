@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import { DropListProps } from "../model";
-import { Pressable, View, Text } from "react-native";
+import { useState, useRef, useEffect } from 'react';
+import { DropListProps } from '../model';
+import { Pressable, FlatList, View, Text } from 'react-native';
 
 export const DropList = <Item,>({
   items,
@@ -35,36 +35,29 @@ export const DropList = <Item,>({
 
   return (
     <View ref={containerRef} className={`relative ${className}`}>
-      <Pressable onPress={onToggleOpen} className="cursor-pointer">
-        {selectItem?.item ? (
-          renderSelectItem(selectItem.item)
-        ) : items?.length > 0 ? (
-          renderSelectItem(items[0])
-        ) : (
-          <Text>Ничего не найдено</Text>
-        )}
-      </Pressable>
+      {selectItem?.item ? (
+        renderSelectItem(selectItem.item, onToggleOpen)
+      ) : items?.length > 0 ? (
+        renderSelectItem(items[0], onToggleOpen)
+      ) : (
+        <Text>Ничего не найдено</Text>
+      )}
 
       {isOpen && (
-        <View
-          className={`absolute top-full left-0 right-0 z-50 ${classNameList}`}
-        >
-          <View className="overflow-y-auto max-h-[204px]">
+        <View className={`absolute left-0 right-0 top-full z-[1000] ${classNameList}`}>
+          <View className="max-h-[204px]">
             {items.map((item, index) => (
               <Pressable
                 key={index}
                 onPress={() => {
-                  onSelectItem(item);
-                  setSelectItem({ item, index });
-                  onCloseList();
+                  if (!(selectItem ? index === selectItem?.index : index === 0)) {
+                    onSelectItem(item);
+                    setSelectItem({ item, index });
+                    onCloseList();
+                  }
                 }}
-                className="hover:cursor-pointer"
-              >
-                {renderItem(
-                  item,
-                  selectItem ? index === selectItem?.index : index === 0,
-                  index
-                )}
+                className="z-[1000] hover:cursor-pointer">
+                {renderItem(item, selectItem ? index === selectItem?.index : index === 0, index)}
               </Pressable>
             ))}
           </View>
@@ -74,4 +67,4 @@ export const DropList = <Item,>({
   );
 };
 
-DropList.displayName = "DropList";
+DropList.displayName = 'DropList';

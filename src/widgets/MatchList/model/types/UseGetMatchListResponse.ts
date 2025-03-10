@@ -1,7 +1,6 @@
-import { MatchType } from "@/entities";
+import { MatchType } from '@/entities';
 
-export interface MatchFromServer
-  extends Omit<MatchType, 'homeTeam' | 'awayTeam'> {
+export interface MatchFromServer extends Omit<MatchType, 'homeTeam' | 'awayTeam'> {
   homeTeam: Omit<MatchType['homeTeam'], 'totalKills'> & {
     total_kills: MatchType['homeTeam']['totalKills'];
   };

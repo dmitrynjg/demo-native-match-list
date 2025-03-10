@@ -12,5 +12,5 @@ export interface MatchCardStatProps {
 }
 
 export interface MatchStatusProps {
-    status: StatusMatch;
+  status: StatusMatch;
 }

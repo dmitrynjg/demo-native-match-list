@@ -1,4 +1,4 @@
-import { StatusMatch } from "@/entities";
+import { StatusMatch } from '@/entities';
 
 export const dropListItems: {
   id: number;

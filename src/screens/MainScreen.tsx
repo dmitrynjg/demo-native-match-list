@@ -1,12 +1,22 @@
-import { Layout } from '@/shared';
-import { StatusMatch, MatchType } from '@/entities';
-import { NavBar, normalizeMatch, MatchList, useGetMatchList } from '@/widgets';
 import { useMemo, useState } from 'react';
 import { ScrollView } from 'react-native';
 
+import { StatusMatch, MatchType } from '@/entities';
+import { Layout } from '@/shared';
+import {
+  NavBar,
+  normalizeMatch,
+  MatchList,
+  useGetMatchList,
+  useGetMatchesUpdateSocket,
+} from '@/widgets';
+
 export const MainScreen = () => {
   const { data: items, isFetching, error, refetch } = useGetMatchList();
+  useGetMatchesUpdateSocket();
+
   const [status, setStatus] = useState<StatusMatch | null>(null);
+
   const list = useMemo<MatchType[]>(() => {
     if (!items) {
       return [];

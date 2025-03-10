@@ -1,7 +1,7 @@
 export type DropListProps<T = unknown> = {
   items: T[];
   renderItem: (item: T, isSelect: boolean, index: number) => React.ReactNode;
-  renderSelectItem: (item: T) => React.ReactNode;
+  renderSelectItem: (item: T, onShowList: VoidFunction) => React.ReactNode;
   onSelectItem: (item: T) => void;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;

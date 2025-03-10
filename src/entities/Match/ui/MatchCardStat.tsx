@@ -12,8 +12,8 @@ export const MatchCardStat: FC<MatchCardStatProps> = ({ players, place, totalKil
         {players.map((player, index) => (
           <View
             key={index}
-            className="flex w-1/3 flex-1 flex-wrap items-center justify-between gap-[8px] rounded-sm bg-[#101318] px-[12px] py-[8px] lg:px-[24px] 2xl:flex-row 2xl:flex-nowrap">
-            <View className="lg:justify-left flex w-full flex-row items-center justify-center gap-[8px] lg:w-auto 2xl:w-1/2 2xl:flex-1">
+            className="flex w-1/3 flex-1 flex-wrap items-center justify-between gap-[8px] rounded-sm bg-[#101318] px-[12px] py-[8px] 2xl:flex-row 2xl:flex-nowrap 2xl:px-[24px]">
+            <View className="flex w-full flex-row items-center justify-center gap-[8px] 2xl:w-1/2 2xl:flex-1 2xl:justify-start">
               <Image
                 source={require('../../../../assets/images/avatar.png')}
                 width={200}
@@ -25,7 +25,7 @@ export const MatchCardStat: FC<MatchCardStatProps> = ({ players, place, totalKil
                 {player.username}
               </Text>
             </View>
-            <View className="lg:justify-left flex w-full flex-row items-center justify-center gap-[8px] lg:w-auto 2xl:w-1/2 2xl:flex-1">
+            <View className="lg:justify-left flex w-full flex-row items-center justify-center gap-[8px] 2xl:w-1/2 2xl:flex-1 2xl:justify-end">
               <Text className="font-inter text-center text-xs font-medium text-[#626467] lg:text-left lg:text-sm">
                 Убийств:
               </Text>
